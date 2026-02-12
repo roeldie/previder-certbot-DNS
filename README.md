@@ -128,7 +128,9 @@ certbot certonly -a dns-multi \
 
 ## Step 8 – Request the certificate
 
-If the dry run is successful, request the actual certificate.
+If the dry run in Step 7 was successful, it is recommended to wait approximately **5 minutes** before requesting the actual certificate.  
+
+The DNS TTL is set to **300 seconds (5 minutes)**, so waiting ensures that any previous DNS challenge records have fully expired and prevents potential validation issues.
 
 Wildcard example:
 
