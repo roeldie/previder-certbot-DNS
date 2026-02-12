@@ -101,7 +101,11 @@ sudo chmod 600 /etc/letsencrypt/dns-multi.ini
 
 ## Step 7 – Test the configuration (dry run)
 
-Run a dry run to test if everything works correctly:
+Run a dry run to test if everything works correctly.
+
+In the example below, we request a **wildcard certificate** (`*.yourdomain.com`).  
+A wildcard certificate is only required if you want to secure all subdomains.  
+If you do not need a wildcard certificate, you can simply remove the `-d "*.yourdomain.com"` line.
 
 ```bash
 certbot certonly -a dns-multi \
@@ -111,15 +115,34 @@ certbot certonly -a dns-multi \
   --dry-run
 ```
 
+If you only need a certificate for the main domain:
+
+```bash
+certbot certonly -a dns-multi \
+  --dns-multi-credentials=/etc/letsencrypt/dns-multi.ini \
+  -d yourdomain.com \
+  --dry-run
+```
+
 ---
 
 ## Step 8 – Request the certificate
 
-If the dry run is successful, request the actual certificate:
+If the dry run is successful, request the actual certificate.
+
+Wildcard example:
 
 ```bash
 certbot certonly -a dns-multi \
   --dns-multi-credentials=/etc/letsencrypt/dns-multi.ini \
   -d yourdomain.com \
   -d "*.yourdomain.com"
+```
+
+Non-wildcard example:
+
+```bash
+certbot certonly -a dns-multi \
+  --dns-multi-credentials=/etc/letsencrypt/dns-multi.ini \
+  -d yourdomain.com
 ```
