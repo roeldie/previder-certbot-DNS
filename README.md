@@ -148,16 +148,14 @@ certbot certonly -a dns-multi \
   --dns-multi-credentials=/etc/letsencrypt/dns-multi.ini \
   -d yourdomain.com
 ```
-## Step 9 – Test automatic renewal
+## Step 9 – Verify automatic renewal
 
-The Certbot snap installation includes a systemd timer that automatically renews your certificates before they expire.
+The Certbot snap includes a systemd timer that will automatically renew your certificates before they expire.  
 
-You do not need to manually renew certificates unless you change your configuration.
-
-You can test automatic renewal by running:
+You can test automatic renewal with:
 
 ```bash
 sudo certbot renew --dry-run
 ```
 
-If this completes successfully, automatic renewal is properly configured.
+If this succeeds, your certificates will renew automatically in the future without further intervention.
