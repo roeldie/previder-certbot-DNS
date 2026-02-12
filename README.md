@@ -10,7 +10,7 @@ This guide assumes you are using Certbot installed via **snap** (Python installa
 
 Follow the official Snap installation instructions:
 
-https://snapcraft.io/docs/installing-snapd/
+https://snapcraft.io/docs/tutorials/install-the-daemon/
 
 ---
 
