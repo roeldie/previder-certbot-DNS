@@ -51,7 +51,7 @@ sudo snap connect certbot:plugin certbot-dns-multi
 
 ## Step 4 – Generate an API key
 
-A **Previder Portal user or application token** is required to modify DNS records and request certificates.
+A **Previder Portal [user](https://portal.previder.nl/#/user/current/tokens) or [application](https://portal.previder.nl/#/application) token** is required to modify DNS records and request certificates.
 
 The token must have the following privileges:
 
