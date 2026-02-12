@@ -68,7 +68,7 @@ Create a dedicated role with only the required privileges for secure operation.
 Create the following file:
 
 ```
-/etc/letsencrypt/dns-multi.ini
+sudo vi /etc/letsencrypt/dns-multi.ini
 ```
 
 Add the following configuration and insert the generated API key:
