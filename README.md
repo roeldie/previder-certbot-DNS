@@ -1,8 +1,8 @@
-# Certbot DNS Validation with Previder DNS
+# Certbot Previder DNS
 
 This guide explains how to use **Certbot DNS validation** in combination with **Previder DNS**.
 
-This guide assumes Certbot is installed using **snap**.
+This guide assumes you are using Certbot installed via **snap** (Python installation is also possible but not covered here).
 
 ---
 
@@ -14,13 +14,13 @@ https://snapcraft.io/docs/installing-snapd/
 
 ---
 
-## Step 2 – Remove Existing Certbot Installations
+## Step 2 – Remove certbot-auto and OS Certbot packages
 
-If Certbot was previously installed using your operating system’s package manager (such as `apt`, `dnf`, or `yum`), remove it before installing the snap version.
+If you have installed Certbot packages via your operating system’s package manager (such as `apt`, `dnf`, or `yum`), you must remove them before installing the Certbot snap version.
 
-This ensures that the snap version is used when running the `certbot` command.
+This ensures that when running the `certbot` command, the snap version is used instead of the OS package version.
 
-Examples:
+Common examples:
 
 ```bash
 sudo apt-get remove certbot
@@ -36,9 +36,9 @@ sudo yum remove certbot
 
 ---
 
-## Step 3 – Install Certbot and DNS Plugin
+## Step 3 – Install Certbot
 
-Run the following commands on your system:
+Run the following commands on the machine to install Certbot and the DNS plugin:
 
 ```bash
 sudo snap install --classic certbot
@@ -49,23 +49,17 @@ sudo snap connect certbot:plugin certbot-dns-multi
 
 ---
 
-## Step 4 – Generate a Previder API Key
+## Step 4 – Generate an API key
 
-To modify DNS records and request certificates, you need a **Previder Portal user token** or an **application token**.
+A **Previder Portal user or application token** is required to modify DNS records and request certificates.
 
-You can create a token in the Previder Portal here:
+The token must have the following privileges:
 
-https://portal.previder.nl/#/user/current/tokens
+- **Read** on Domains  
+- **Read/Update** on DNS for the client  
 
-### Required Permissions
-
-The token must have:
-
-- **Read** access on Domains  
-- **Read/Update** access on DNS for the client  
-
-For security reasons, create a dedicated role with only the required permissions.  
-The token will be stored on the server, so make sure file permissions are properly restricted.
+This token will be visible to anyone who has access to the deployment.  
+Create a dedicated role with only the required privileges for secure operation.
 
 ---
 
@@ -77,7 +71,7 @@ Create the following file:
 /etc/letsencrypt/dns-multi.ini
 ```
 
-Add the following configuration:
+Add the following configuration and insert the generated API key:
 
 ```ini
 dns_multi_provider = pdns
@@ -90,9 +84,13 @@ PDNS_POLLING_INTERVAL = 5
 PDNS_TTL = 300
 ```
 
-Replace `YOUR_API_KEY_HERE` with the API key generated in Step 4.
+Replace `YOUR_API_KEY_HERE` with your actual API key.
 
-Set secure file permissions:
+---
+
+## Step 6 – Set correct file permissions
+
+Secure the credentials file:
 
 ```bash
 sudo chmod 600 /etc/letsencrypt/dns-multi.ini
@@ -100,22 +98,27 @@ sudo chmod 600 /etc/letsencrypt/dns-multi.ini
 
 ---
 
-## Requesting a Certificate (Example)
+## Step 7 – Test the configuration (dry run)
+
+Run a dry run to test if everything works correctly:
 
 ```bash
-sudo certbot certonly \
-  --dns-multi \
-  --dns-multi-credentials /etc/letsencrypt/dns-multi.ini \
-  -d example.com \
-  -d '*.example.com'
+certbot certonly -a dns-multi \
+  --dns-multi-credentials=/etc/letsencrypt/dns-multi.ini \
+  -d yourdomain.com \
+  -d "*.yourdomain.com" \
+  --dry-run
 ```
-
-Replace `example.com` with your actual domain.
 
 ---
 
-## Notes
+## Step 8 – Request the certificate
 
-- DNS propagation timeout is set to **800 seconds**.
-- Adjust `PDNS_PROPAGATION_TIMEOUT` if validation fails due to slow DNS propagation.
-- Wildcard certificates require DNS validation.
+If the dry run is successful, request the actual certificate:
+
+```bash
+certbot certonly -a dns-multi \
+  --dns-multi-credentials=/etc/letsencrypt/dns-multi.ini \
+  -d yourdomain.com \
+  -d "*.yourdomain.com"
+```
