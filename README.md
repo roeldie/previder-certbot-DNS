@@ -22,14 +22,15 @@ This ensures that when running the `certbot` command, the snap version is used i
 
 Common examples:
 
+Ubuntu
 ```bash
 sudo apt-get remove certbot
 ```
-
+Rhel Based systems as Redhat AlmaLinux Rocky
 ```bash
 sudo dnf remove certbot
 ```
-
+CentOS
 ```bash
 sudo yum remove certbot
 ```
