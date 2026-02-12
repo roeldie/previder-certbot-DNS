@@ -53,6 +53,10 @@ sudo snap connect certbot:plugin certbot-dns-multi
 
 To modify DNS records and request certificates, you need a **Previder Portal user token** or an **application token**.
 
+You can create a token in the Previder Portal here:
+
+https://portal.previder.nl/#/user/current/tokens
+
 ### Required Permissions
 
 The token must have:
