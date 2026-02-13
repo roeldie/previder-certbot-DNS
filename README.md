@@ -69,6 +69,7 @@ Create a dedicated role with only the required privileges for secure operation.
 Create the following file:
 
 ```
+sudo mkdir -p /etc/letsencrypt
 sudo vi /etc/letsencrypt/dns-multi.ini
 ```
 
