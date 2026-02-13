@@ -59,7 +59,7 @@ The token must have the following privileges:
 - **Read** on Domains  
 - **Read/Update** on DNS for the client  
 
-This token will be visible to anyone who has access to the deployment.  
+This token will be visible to anyone who has access to the server.  
 Create a dedicated role with only the required privileges for secure operation.
 
 ---
