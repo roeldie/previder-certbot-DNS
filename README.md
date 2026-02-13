@@ -150,6 +150,8 @@ certbot certonly -a dns-multi \
 ```
 ## Step 9 – Verify automatic renewal
 
+It is recommended to wait approximately **5 minutes** before requesting the actual certificate.
+
 The Certbot snap includes a systemd timer that will automatically renew your certificates before they expire.  
 
 You can test automatic renewal with:
